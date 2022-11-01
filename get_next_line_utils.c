@@ -6,21 +6,101 @@
 /*   By: ejanssen <ejanssen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:16:05 by ejanssen          #+#    #+#             */
-/*   Updated: 2022/10/31 14:54:14 by ejanssen         ###   ########.fr       */
+/*   Updated: 2022/11/01 11:10:10 by ejanssen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*find_next_line(const char *buf, char c)
+size_t	ft_strlen(const char *s)
 {
-	while (*buf != '\0')
+	int	length;
+
+	length = 0;
+	while (s[length] != '\0')
+		length++;
+	return (length);
+}
+
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+{
+	const char	*start;
+
+	start = src;
+	if (dstsize > 0)
 	{
-		if (*buf == c)
-			return ((char *)buf);
-		buf++;
+		while (dstsize - 1 > 0 && *src)
+		{
+			*dst++ = *src++;
+			dstsize--;
+		}
 	}
-	if (c == '\0')
-		return ("\0");
-	return (NULL);
+	while (*src++)
+		;
+	if (dstsize > 0)
+		*dst = '\0';
+	return (src - start - 1);
+}
+
+char	*ft_strdup(const char *src)
+{
+	char	*cpy;
+	size_t	src_len;
+
+	src_len = ft_strlen(src) + 1;
+	cpy = malloc(src_len * sizeof(char));
+	if (cpy == NULL)
+		return (NULL);
+	ft_strlcpy(cpy, src, src_len);
+	return (cpy);
+}
+
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
+{
+	int		src_id;
+	size_t	dst_len;
+	size_t	src_len;
+	size_t	offset;
+
+	dst_len = ft_strlen(dst);
+	src_len = ft_strlen(src);
+	offset = dst_len;
+	src_id = 0;
+	if (dstsize == 0)
+		return (src_len);
+	while (src[src_id] != '\0' && offset < dstsize - 1)
+	{
+		dst[offset] = src[src_id];
+		offset++;
+		src_id++;
+	}
+	dst[dst_len + src_id] = '\0';
+	if (dstsize < dst_len)
+		return (src_len + dstsize);
+	return (dst_len + src_len);
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char	*sub;
+	char	*begin;
+	size_t	i;
+
+	if (start > ft_strlen(s))
+		return (ft_strdup(""));
+	if (start + len > ft_strlen(s))
+		len = ft_strlen((s + start));
+	sub = malloc((len + 1) * sizeof (char));
+	if (sub == NULL)
+		return (NULL);
+	begin = sub;
+	i = 0;
+	while (i < len && (i + start) < ft_strlen(s))
+	{
+		*sub = s[i + start];
+		i++;
+		sub++;
+	}
+	*sub = '\0';
+	return ((char *)begin);
 }

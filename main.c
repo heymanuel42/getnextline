@@ -6,7 +6,7 @@
 /*   By: ejanssen <ejanssen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:01:10 by ejanssen          #+#    #+#             */
-/*   Updated: 2022/10/31 15:14:27 by ejanssen         ###   ########.fr       */
+/*   Updated: 2022/11/01 12:35:48 by ejanssen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,22 @@ int	main(void)
 	int	fd;
 
 	fd = open("test.txt", O_RDONLY);
-	get_next_line(fd);
-
-
+	char *c = get_next_line(fd);
+	printf("%s", c);
+	if (c)
+		free(c);
+	c = get_next_line(fd);
+	printf("%s", c);
+	if (c)
+		free(c);
+	c = get_next_line(fd);
+	printf("%s", c);
+	if (c)
+		free(c);
+	c = get_next_line(fd);
+	printf("%s", c);
+	if (c)
+		free(c);
+	close(fd);
 	return (0);
 }
