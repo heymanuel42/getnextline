@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejanssen <ejanssen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejanssen <ejanssen@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 13:58:48 by ejanssen          #+#    #+#             */
-/*   Updated: 2022/11/01 12:18:11 by ejanssen         ###   ########.fr       */
+/*   Updated: 2022/11/02 09:39:22 by ejanssen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 char	*append(char *str, char *to_append);
 char	*get_next_line(int fd);
-int		find_next_line(const char *buf, char c);
+int	    find(const char *buf, ssize_t n_bytes, char c);
 
 //
 #endif

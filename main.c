@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejanssen <ejanssen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejanssen <ejanssen@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:01:10 by ejanssen          #+#    #+#             */
-/*   Updated: 2022/11/01 12:35:48 by ejanssen         ###   ########.fr       */
+/*   Updated: 2022/11/02 09:47:21 by ejanssen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,25 @@
 #include <stdio.h>
 #include <fcntl.h>
 
+void	ft_read(int fd)
+{
+	char	*c;
+
+	c = get_next_line(fd);
+	printf("%s", c);
+	if (c)
+		free(c);
+}
+
 int	main(void)
 {
 	int	fd;
 
-	fd = open("test.txt", O_RDONLY);
-	char *c = get_next_line(fd);
-	printf("%s", c);
-	if (c)
-		free(c);
-	c = get_next_line(fd);
-	printf("%s", c);
-	if (c)
-		free(c);
-	c = get_next_line(fd);
-	printf("%s", c);
-	if (c)
-		free(c);
-	c = get_next_line(fd);
-	printf("%s", c);
-	if (c)
-		free(c);
+	fd = open("empty.txt", O_RDONLY);
+	ft_read(fd);
+	ft_read(fd);
+	ft_read(fd);
+
 	close(fd);
 	return (0);
 }

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejanssen <ejanssen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejanssen <ejanssen@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:16:05 by ejanssen          #+#    #+#             */
-/*   Updated: 2022/11/01 11:10:10 by ejanssen         ###   ########.fr       */
+/*   Updated: 2022/11/02 09:37:04 by ejanssen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
 size_t	ft_strlen(const char *s)
 {
@@ -45,13 +46,18 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 char	*ft_strdup(const char *src)
 {
 	char	*cpy;
+	int		i;
 	size_t	src_len;
 
+	i = 0;
 	src_len = ft_strlen(src) + 1;
-	cpy = malloc(src_len * sizeof(char));
-	if (cpy == NULL)
-		return (NULL);
-	ft_strlcpy(cpy, src, src_len);
+	cpy = malloc(src_len);
+	while (src[i] != '\0')
+	{
+		cpy[i] = src[i];
+		i++;
+	}
+	cpy[i] = '\0';
 	return (cpy);
 }
 
@@ -85,6 +91,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	char	*sub;
 	char	*begin;
 	size_t	i;
+
 
 	if (start > ft_strlen(s))
 		return (ft_strdup(""));
