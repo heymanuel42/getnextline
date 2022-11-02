@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejanssen <ejanssen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejanssen <ejanssen@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 13:58:48 by ejanssen          #+#    #+#             */
-/*   Updated: 2022/11/02 11:59:25 by ejanssen         ###   ########.fr       */
+/*   Updated: 2022/11/02 13:58:51 by ejanssen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 char	*ft_append(char *str, char *to_append);
-char	*ft_getline(char *buf, ssize_t bread, char **overflow);
+char	*ft_readbuf(char *buf, ssize_t bread, char **overflow);
 char	*get_next_line(int fd);
 int		ft_find(const char *buf, ssize_t n_bytes, char c);
 

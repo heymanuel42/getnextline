@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejanssen <ejanssen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejanssen <ejanssen@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 13:59:57 by ejanssen          #+#    #+#             */
-/*   Updated: 2022/11/02 11:59:33 by ejanssen         ###   ########.fr       */
+/*   Updated: 2022/11/02 15:28:05 by ejanssen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,30 +45,27 @@ char	*ft_append(char *str, char *to_append)
 	ft_strlcpy(new, str, ft_strlen(str) + 1);
 	ft_strlcat(new, to_append, old_l + ft_strlen(to_append) + 1);
 	free(str);
+	free(to_append);
 	return (new);
 }
 
-char	*ft_getline(char *buf, ssize_t bread, char **overflow)
+char	*ft_readbuf(char *buf, ssize_t bread, char **overflow)
 {
 	int		nl_i;
 	char	*res;
 
+	if (bread <= 0)
+		return (NULL);
 	res = NULL;
 	nl_i = ft_find(buf, bread, '\n');
 	if (nl_i >= 0)
 	{
 		res = ft_substr(buf, 0, nl_i + 1);
-		if(*overflow)
+		if (*overflow)
 			free(*overflow);
 		*overflow = ft_substr(buf, nl_i + 1, bread - nl_i);
-		//printf("$%s$\n", *overflow);
-		if (ft_strlen(*overflow) == 0)
-		{
-			free(*overflow);
-			*overflow = NULL;
-		}
 	}
-	else if (bread != BUFFER_SIZE)
+	else
 	{
 		res = ft_strdup(buf);
 		if (*overflow)
@@ -76,65 +73,55 @@ char	*ft_getline(char *buf, ssize_t bread, char **overflow)
 			free(*overflow);
 			*overflow = NULL;
 		}
-	}
-	else
-	{
-		res = ft_strdup(buf);
 	}
 	return (res);
 }
 
-char	*read_until_next_line(int fd, char **overflow)
+ssize_t	ft_readline(int fd, char **buf, char **overflow)
 {
-	char	buf[BUFFER_SIZE + 1];
 	ssize_t	bread;
-	char	*res;
-	char	*tmp;
-	if (*overflow)
+	char	b[BUFFER_SIZE + 1];
+
+	b[0] = '\0';
+	if (*buf)
 	{
-		ft_strlcpy(buf, *overflow, ft_strlen(*overflow) + 1);
-		bread = ft_strlen(buf);
+		free(*buf);
+		*buf = NULL;
 	}
+	if (*overflow && *buf)
+		bread = ft_strlcpy(*buf, *overflow, ft_strlen(*overflow) + 1);
 	else
 	{
-		bread = read(fd, buf, BUFFER_SIZE);
-		buf[bread] = '\0';
+		bread = read(fd, b, BUFFER_SIZE);
+		if (bread == 0)
+			return (bread);
+		b[bread] = '\0';
+		*buf = ft_strdup(b);
 	}
-	if (bread <= 0)
-		return (NULL);
-	res = ft_getline(buf, bread, overflow);
-	while (ft_find(buf, bread, '\n') < 0 && bread > 0)
-	{
-		if (*overflow)
-		{
-			ft_strlcpy(buf, *overflow, ft_strlen(*overflow) + 1);
-			bread = ft_strlen(buf);
-		}
-		else
-		{
-			bread = read(fd, buf, BUFFER_SIZE);
-			buf[bread] = '\0';
-		}
-		if (bread <= 0)
-			break;
-		//printf("buff=%s res=%s line=%s\n", buf, res, get_line(buf, bread, overflow));
-		tmp = ft_getline(buf, bread, overflow);
-		res = ft_append(res, tmp);
-		if(tmp)
-			free(tmp);
-	}
-	return (res);
+	return (bread);
 }
 
 char	*get_next_line(int fd)
 {
-	char		*tmp;
 	static char	*overflow;
+	char		*buf;
+	ssize_t		bread;
+	char		*res;
 
+	buf = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	tmp = read_until_next_line(fd, &overflow);
-	if (!tmp)
+	bread = ft_readline(fd, &buf, &overflow);
+	res = ft_readbuf(buf, bread, &overflow);
+	if (bread == 0)
 		return (NULL);
-	return (tmp);
+	while (ft_find(buf, bread, '\n') < 0 && bread > 0 && res != NULL)
+	{
+		bread = ft_readline(fd, &buf, &overflow);
+		if (bread <= 0)
+			break ;
+		res = ft_append(res, ft_readbuf(buf, bread, &overflow));
+	}
+	free(buf);
+	return (res);
 }

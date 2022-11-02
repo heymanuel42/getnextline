@@ -6,7 +6,7 @@
 /*   By: ejanssen <ejanssen@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:16:05 by ejanssen          #+#    #+#             */
-/*   Updated: 2022/11/02 09:37:04 by ejanssen         ###   ########.fr       */
+/*   Updated: 2022/11/02 15:15:41 by ejanssen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	char	*begin;
 	size_t	i;
 
-
 	if (start > ft_strlen(s))
 		return (ft_strdup(""));
 	if (start + len > ft_strlen(s))
@@ -104,10 +103,14 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	i = 0;
 	while (i < len && (i + start) < ft_strlen(s))
 	{
-		*sub = s[i + start];
+		*(sub++) = s[i + start];
 		i++;
-		sub++;
 	}
 	*sub = '\0';
+	if (len == 0)
+	{
+		free(begin);
+		begin = NULL;
+	}
 	return ((char *)begin);
 }
