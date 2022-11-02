@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejanssen <ejanssen@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: ejanssen <ejanssen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:01:10 by ejanssen          #+#    #+#             */
-/*   Updated: 2022/11/02 09:47:21 by ejanssen         ###   ########.fr       */
+/*   Updated: 2022/11/02 12:08:47 by ejanssen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,23 @@ void	ft_read(int fd)
 int	main(void)
 {
 	int	fd;
-
 	fd = open("empty.txt", O_RDONLY);
+	ft_read(fd);
+	ft_read(fd);
 	ft_read(fd);
 	ft_read(fd);
 	ft_read(fd);
 
 	close(fd);
+	fd = open("empty.txt", O_RDONLY);
+	ft_read(fd);
+	ft_read(fd);
+	ft_read(fd);
+	ft_read(fd);	
+	ft_read(fd);
+//ft_read(fd);
+	//ft_read(fd);
+	close(fd);
+
 	return (0);
 }
