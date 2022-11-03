@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ejanssen <ejanssen@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 13:59:57 by ejanssen          #+#    #+#             */
-/*   Updated: 2022/11/03 18:38:50 by ejanssen         ###   ########.fr       */
+/*   Updated: 2022/11/03 18:42:12 by ejanssen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 #include <stdio.h>
 
 static int	ft_find(const char *buf, ssize_t n_bytes, char c)
@@ -100,21 +100,21 @@ static ssize_t	ft_readline(int fd, char *buf, char **overflow)
 
 char	*get_next_line(int fd)
 {
-	static char	*overflow;
+	static char	*overflow[4096];
 	char		buf[BUFFER_SIZE + 1];
 	ssize_t		bread;
 	char		*res;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	bread = ft_readline(fd, buf, &overflow);
-	res = ft_readbuf(buf, bread, &overflow);
+	bread = ft_readline(fd, buf, &overflow[fd]);
+	res = ft_readbuf(buf, bread, &overflow[fd]);
 	while (res != NULL && bread > 0 && ft_find(buf, bread, '\n') < 0)
 	{
-		bread = ft_readline(fd, buf, &overflow);
+		bread = ft_readline(fd, buf, &overflow[fd]);
 		if (bread <= 0)
 			break ;
-		res = ft_append(res, ft_readbuf(buf, bread, &overflow));
+		res = ft_append(res, ft_readbuf(buf, bread, &overflow[fd]));
 	}
 	return (res);
 }
