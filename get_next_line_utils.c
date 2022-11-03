@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejanssen <ejanssen@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: ejanssen <ejanssen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:16:05 by ejanssen          #+#    #+#             */
-/*   Updated: 2022/11/02 15:15:41 by ejanssen         ###   ########.fr       */
+/*   Updated: 2022/11/03 14:20:50 by ejanssen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,12 @@ char	*ft_strdup(const char *src)
 	return (cpy);
 }
 
-size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize, size_t dst_len)
 {
 	int		src_id;
-	size_t	dst_len;
 	size_t	src_len;
 	size_t	offset;
 
-	dst_len = ft_strlen(dst);
 	src_len = ft_strlen(src);
 	offset = dst_len;
 	src_id = 0;
@@ -91,17 +89,19 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	char	*sub;
 	char	*begin;
 	size_t	i;
+	size_t	slen;
 
-	if (start > ft_strlen(s))
+	slen = ft_strlen(s);
+	if (start > slen)
 		return (ft_strdup(""));
-	if (start + len > ft_strlen(s))
+	if (start + len > slen)
 		len = ft_strlen((s + start));
 	sub = malloc((len + 1) * sizeof (char));
 	if (sub == NULL)
 		return (NULL);
 	begin = sub;
 	i = 0;
-	while (i < len && (i + start) < ft_strlen(s))
+	while (i < len && (i + start) < slen)
 	{
 		*(sub++) = s[i + start];
 		i++;
