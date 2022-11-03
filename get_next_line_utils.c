@@ -6,7 +6,7 @@
 /*   By: ejanssen <ejanssen@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:16:05 by ejanssen          #+#    #+#             */
-/*   Updated: 2022/11/03 17:42:09 by ejanssen         ###   ########.fr       */
+/*   Updated: 2022/11/03 18:18:58 by ejanssen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,8 @@ size_t	ft_strlen(const char *s)
 	int	length;
 
 	length = 0;
-	if (s)
-	{
-		while (s[length] != '\0')
-			length++;
-	}
+	while (s[length] != '\0')
+		length++;
 	return (length);
 }
 

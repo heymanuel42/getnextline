@@ -6,7 +6,7 @@
 /*   By: ejanssen <ejanssen@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 13:59:57 by ejanssen          #+#    #+#             */
-/*   Updated: 2022/11/03 18:13:05 by ejanssen         ###   ########.fr       */
+/*   Updated: 2022/11/03 18:18:15 by ejanssen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ static char	*ft_append(char *str, char *to_append)
 	size_t	old_l;
 	size_t	new_l;
 
-	new_l = ft_strlen(to_append);
-	if (new_l <= 0)
+	if (!to_append)
 		return (NULL);
+	new_l = ft_strlen(to_append);
 	if (str == NULL)
 	{
 		new = malloc(sizeof(char) * (new_l + 1));
