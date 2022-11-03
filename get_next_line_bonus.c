@@ -6,12 +6,11 @@
 /*   By: ejanssen <ejanssen@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 13:59:57 by ejanssen          #+#    #+#             */
-/*   Updated: 2022/11/03 18:42:12 by ejanssen         ###   ########.fr       */
+/*   Updated: 2022/11/03 18:47:34 by ejanssen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
-#include <stdio.h>
 
 static int	ft_find(const char *buf, ssize_t n_bytes, char c)
 {
