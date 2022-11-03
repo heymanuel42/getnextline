@@ -6,14 +6,14 @@
 /*   By: ejanssen <ejanssen@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 13:59:57 by ejanssen          #+#    #+#             */
-/*   Updated: 2022/11/03 17:44:42 by ejanssen         ###   ########.fr       */
+/*   Updated: 2022/11/03 18:13:05 by ejanssen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
 
-int	ft_find(const char *buf, ssize_t n_bytes, char c)
+static int	ft_find(const char *buf, ssize_t n_bytes, char c)
 {
 	int	i;
 
@@ -27,7 +27,7 @@ int	ft_find(const char *buf, ssize_t n_bytes, char c)
 	return (-1);
 }
 
-char	*ft_append(char *str, char *to_append)
+static char	*ft_append(char *str, char *to_append)
 {
 	char	*new;
 	size_t	old_l;
@@ -51,7 +51,7 @@ char	*ft_append(char *str, char *to_append)
 	return (new);
 }
 
-char	*ft_readbuf(char *buf, ssize_t bread, char **overflow)
+static char	*ft_readbuf(char *buf, ssize_t bread, char **overflow)
 {
 	int		nl_i;
 	char	*res;
@@ -79,7 +79,7 @@ char	*ft_readbuf(char *buf, ssize_t bread, char **overflow)
 	return (res);
 }
 
-ssize_t	ft_readline(int fd, char *buf, char **overflow)
+static ssize_t	ft_readline(int fd, char *buf, char **overflow)
 {
 	ssize_t	bread;
 
