@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejanssen <ejanssen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejanssen <ejanssen@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:01:10 by ejanssen          #+#    #+#             */
-/*   Updated: 2022/11/03 14:12:28 by ejanssen         ###   ########.fr       */
+/*   Updated: 2022/11/03 17:59:54 by ejanssen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_read(int fd)
 	char	*c;
 
 	c = get_next_line(fd);
-	//printf("%s", c);
+	printf("%s", c);
 	if (c)
 		free(c);
 }
@@ -31,8 +31,7 @@ int	main(void)
 
 	fd = open("empty.txt", O_RDONLY);
 	ft_read(fd);
+	ft_read(fd);
 	close(fd);
-	printf("%d\n",cnt);
-	//while(1);
 	return (0);
 }

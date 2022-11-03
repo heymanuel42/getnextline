@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejanssen <ejanssen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejanssen <ejanssen@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 13:59:57 by ejanssen          #+#    #+#             */
-/*   Updated: 2022/11/03 14:18:39 by ejanssen         ###   ########.fr       */
+/*   Updated: 2022/11/03 17:44:42 by ejanssen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,17 @@ char	*ft_append(char *str, char *to_append)
 	size_t	new_l;
 
 	new_l = ft_strlen(to_append);
+	if (new_l <= 0)
+		return (NULL);
 	if (str == NULL)
 	{
 		new = malloc(sizeof(char) * (new_l + 1));
-		ft_strlcpy(new, to_append, new_l + 1);
+		ft_strlcat(new, str, new_l + 1, 0);
 		return (new);
 	}
 	old_l = ft_strlen(str);
 	new = malloc(sizeof(char) * (old_l + new_l + 1));
-	ft_strlcpy(new, str, old_l + 1);
+	ft_strlcat(new, str, old_l + 1, 0);
 	ft_strlcat(new, to_append, old_l + new_l + 1, old_l);
 	free(str);
 	free(to_append);
@@ -77,31 +79,21 @@ char	*ft_readbuf(char *buf, ssize_t bread, char **overflow)
 	return (res);
 }
 
-ssize_t	ft_readline(int fd, char **buf, char **overflow)
+ssize_t	ft_readline(int fd, char *buf, char **overflow)
 {
 	ssize_t	bread;
 
-	if (*buf)
-	{
-		free(*buf);
-		*buf = NULL;
-	}
 	if (*overflow)
 	{
-		*buf = ft_strdup(*overflow);
-		bread = ft_strlen(*buf);
+		ft_strlcat(buf, *overflow, BUFFER_SIZE, 0);
+		bread = ft_strlen(buf);
 	}
 	else
 	{
-		*buf = malloc(BUFFER_SIZE + 1);
-		bread = read(fd, *buf, BUFFER_SIZE);
+		bread = read(fd, buf, BUFFER_SIZE);
 		if (bread <= 0)
-		{
-			free(*buf);
-			*buf = NULL;
-			return (bread);
-		}
-		(*buf)[bread] = '\0';
+			return (0);
+		(buf)[bread] = '\0';
 	}
 	return (bread);
 }
@@ -109,25 +101,20 @@ ssize_t	ft_readline(int fd, char **buf, char **overflow)
 char	*get_next_line(int fd)
 {
 	static char	*overflow;
-	char		*buf;
+	char		buf[BUFFER_SIZE + 1];
 	ssize_t		bread;
 	char		*res;
 
-	buf = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	bread = ft_readline(fd, &buf, &overflow);
+	bread = ft_readline(fd, buf, &overflow);
 	res = ft_readbuf(buf, bread, &overflow);
-	if (bread == 0)
-		return (NULL);
-	while (ft_find(buf, bread, '\n') < 0 && bread > 0 && res != NULL)
+	while (res != NULL && bread > 0 && ft_find(buf, bread, '\n') < 0)
 	{
-		bread = ft_readline(fd, &buf, &overflow);
+		bread = ft_readline(fd, buf, &overflow);
 		if (bread <= 0)
 			break ;
 		res = ft_append(res, ft_readbuf(buf, bread, &overflow));
 	}
-	if (buf)
-		free(buf);
 	return (res);
 }

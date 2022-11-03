@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ejanssen <ejanssen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ejanssen <ejanssen@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:16:05 by ejanssen          #+#    #+#             */
-/*   Updated: 2022/11/03 14:20:50 by ejanssen         ###   ########.fr       */
+/*   Updated: 2022/11/03 17:42:09 by ejanssen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,29 +18,12 @@ size_t	ft_strlen(const char *s)
 	int	length;
 
 	length = 0;
-	while (s[length] != '\0')
-		length++;
-	return (length);
-}
-
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
-{
-	const char	*start;
-
-	start = src;
-	if (dstsize > 0)
+	if (s)
 	{
-		while (dstsize - 1 > 0 && *src)
-		{
-			*dst++ = *src++;
-			dstsize--;
-		}
+		while (s[length] != '\0')
+			length++;
 	}
-	while (*src++)
-		;
-	if (dstsize > 0)
-		*dst = '\0';
-	return (src - start - 1);
+	return (length);
 }
 
 char	*ft_strdup(const char *src)
@@ -87,30 +70,23 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize, size_t dst_len)
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*sub;
-	char	*begin;
 	size_t	i;
 	size_t	slen;
 
 	slen = ft_strlen(s);
-	if (start > slen)
-		return (ft_strdup(""));
 	if (start + len > slen)
 		len = ft_strlen((s + start));
+	if (len == 0 || start > slen)
+		return (NULL);
 	sub = malloc((len + 1) * sizeof (char));
 	if (sub == NULL)
 		return (NULL);
-	begin = sub;
 	i = 0;
 	while (i < len && (i + start) < slen)
 	{
-		*(sub++) = s[i + start];
+		sub[i] = s[i + start];
 		i++;
 	}
-	*sub = '\0';
-	if (len == 0)
-	{
-		free(begin);
-		begin = NULL;
-	}
-	return ((char *)begin);
+	sub[i] = '\0';
+	return (sub);
 }
