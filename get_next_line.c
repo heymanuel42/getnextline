@@ -6,7 +6,7 @@
 /*   By: ejanssen <ejanssen@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 13:59:57 by ejanssen          #+#    #+#             */
-/*   Updated: 2022/11/02 15:28:05 by ejanssen         ###   ########.fr       */
+/*   Updated: 2022/11/03 10:32:17 by ejanssen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,11 @@ ssize_t	ft_readline(int fd, char **buf, char **overflow)
 		free(*buf);
 		*buf = NULL;
 	}
-	if (*overflow && *buf)
-		bread = ft_strlcpy(*buf, *overflow, ft_strlen(*overflow) + 1);
+	if (*overflow)
+	{
+		*buf = ft_strdup(*overflow);
+		bread = ft_strlen(*buf);
+	}
 	else
 	{
 		bread = read(fd, b, BUFFER_SIZE);

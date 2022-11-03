@@ -6,7 +6,7 @@
 /*   By: ejanssen <ejanssen@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:01:10 by ejanssen          #+#    #+#             */
-/*   Updated: 2022/11/02 15:25:51 by ejanssen         ###   ########.fr       */
+/*   Updated: 2022/11/03 10:01:24 by ejanssen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,12 @@ void	ft_read(int fd)
 int	main(void)
 {
 	int	fd;
-	fd = open("empty.txt", O_RDONLY);
-	close(fd);
+
 	fd = open("empty.txt", O_RDONLY);
 	ft_read(fd);
 	ft_read(fd);
-	close(fd);
-	fd = open("empty.txt", O_RDONLY);
+	ft_read(fd);
+	ft_read(fd);
 	ft_read(fd);
 	ft_read(fd);
 	close(fd);
